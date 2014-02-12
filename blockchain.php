@@ -41,8 +41,8 @@ class BlockChain
     }
     }
     
-    function getWalletBalance($guid,$main_password,$address,$confirmations=6) { 
-/*
+ 
+ /*
 * Getting the balance of an address
 *
 *
@@ -56,10 +56,10 @@ class BlockChain
 * Note: Most Bitcon clients require 6 or more confirmations. As such 6 confirmations will be the minimum used
 
 * The value present will be in Satoshi, to get BTC Divide by 100000000
-*
-*
-*
-*/              
+
+*/   
+ 
+    function getWalletBalance($guid,$main_password,$address,$confirmations=6) { 
 
 $base = "https://blockchain.info/merchant/{$guid}/address_balance?password={$main_password}&address={$address}&confirmations={$confirmations}";
 $content = file_get_contents($base);
