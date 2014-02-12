@@ -1,7 +1,7 @@
 <?php
 
 
-require_once("/../blockchain.class.php");
+require_once("../blockchain.class.php");
 
 	//initiate blockchain api wrapper with our api code
 	$blockchain = new BlockChain("api code here");
