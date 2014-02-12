@@ -51,12 +51,12 @@ private $api_code;
 			$base .= "&" . $key . "=" . $field;
 				}
 			}	
-		}
+		
 		
 	$content =  file_get_contents($base);
 		//returns data received or if it failed will return false
 		return $content;
-    }
+}
     
  
  /*
