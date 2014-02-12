@@ -24,6 +24,8 @@ $priv, $label, $email are optional arguments
 
 private $api_code;
 
+ const cwalleturl = 'https://blockchain.info/api/v2/create_wallet'; //API url for creating a wallet 
+
 		//When class is initiated include api_code
 	public function __construct($apicode){
 		$this->api_code = $apicode;
@@ -42,13 +44,12 @@ private $api_code;
     public function createWallet($password,$args = false) {
 		
 	//api url
-	$base = "https://blockchain.info/api/v2/create_wallet?api_code=" . $this->api_code . "&password=" . $password;
+	$base = $this->cwalleturl . '?api_code=' . $this->api_code . '&password=' . $password;
 	  
 	  
 		if ($args != false){	
 			foreach ($args as $key=>$field) {
-			
-			$base .= "&" . $key . "=" . $field;
+			$base .= '&' . $key . '=' . $field;
 				}
 			}	
 		
@@ -78,7 +79,7 @@ private $api_code;
  
     function getWalletBalance($guid,$main_password,$address,$confirmations=6) { 
 
-    $base = "https://blockchain.info/merchant/{$guid}/address_balance?password={$main_password}&address={$address}&confirmations={$confirmations}";
+    $base = 'https://blockchain.info/merchant/' . $guid . '/address_balance?password=' . $main_password . '&address=' . $adress . '&confirmations=' . $confirmations;
 
     $content = file_get_contents($base);
 
