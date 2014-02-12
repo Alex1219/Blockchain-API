@@ -47,8 +47,8 @@ private $api_code;
 	  
 		if ($args != false){	
 			foreach ($args as $key=>$field) {
-				if ($args[$field] != '')  {
-					$base .= "&" . $key . "=" . $field;
+			
+			$base .= "&" . $key . "=" . $field;
 				}
 			}	
 		}
