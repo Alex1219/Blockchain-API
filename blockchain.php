@@ -61,13 +61,18 @@ class BlockChain
  
     function getWalletBalance($guid,$main_password,$address,$confirmations=6) { 
 
-$base = "https://blockchain.info/merchant/{$guid}/address_balance?password={$main_password}&address={$address}&confirmations={$confirmations}";
-$content = file_get_contents($base);
-if ($content != False) {
-return $content;
-}
-else {
-die("Error");
-}
-} 
-}
+    $base = "https://blockchain.info/merchant/{$guid}/address_balance?password={$main_password}&address={$address}&confirmations={$confirmations}";
+
+    $content = file_get_contents($base);
+
+    if ($content != False) {
+    
+    return $content;
+    }
+    
+    else {
+
+    die("Error");
+    }
+    } 
+    }
