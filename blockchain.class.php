@@ -14,31 +14,41 @@
     $email An email to associate with the new wallet i.e. the email address of the user you are creating this wallet on behalf of. (Optional)
 */
 
-class BlockChain
-{
+class BlockChain {
+
+/*
+creates a bitcoin wallet
+Requires $api_code, and $password arguments
+$priv, $label, $email are optional arguments
+*/
     public function createWallet($api_code,$password,$priv='',$label='',$email='') {
-    
-    $base = "https://blockchain.info/api/v2/create_wallet?api_code={$api_code}&password={$password}";
-    if ($priv || $label || $email != '') {
-    
-    $args = [
-    "priv"=> $priv,
-    "label" => $label,
-    "email" => $email ];
-    
-    foreach (array("priv", "label", "email") as $field) {
-    if ($args[$field] != '')  {$base .= "&{$field}={$args[$field]}";}
-    }
-    }
-    
-    $content =  file_get_contents($base);
-    
-    if ($content != False)
-    return $content;
-    
-    else {
-    die("Error");
-    }
+		
+	//api url
+	$base = "https://blockchain.info/api/v2/create_wallet?api_code={$api_code}&password={$password}";
+	  
+		if ($priv || $label || $email != '') {
+				//optional arguments
+				$args = array(
+				"priv"=> $priv,
+				"label" => $label,
+				"email" => $email 
+				);
+				
+					foreach ($args as $field) {
+						if ($args[$field] != '')  {
+							$base .= "&{$field}={$args[$field]}";
+						}
+					}
+		}
+		
+	$content =  file_get_contents($base);
+		
+		if ($content != False) {
+			return $content;
+		} else {
+		//TODO: replace this with better error handling!
+			die("Error");
+		}
     }
     
  
@@ -65,14 +75,15 @@ class BlockChain
 
     $content = file_get_contents($base);
 
-    if ($content != False) {
-    
-    return $content;
-    }
-    
-    else {
-
-    die("Error");
-    }
+		if ($content != False) {
+			return $content;
+		} else {
+		//todo replace with error handling
+			die("Error");
+		}
+		
     } 
-    }
+	
+	
+	
+}
