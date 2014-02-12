@@ -21,34 +21,41 @@ creates a bitcoin wallet
 Requires $api_code, and $password arguments
 $priv, $label, $email are optional arguments
 */
-    public function createWallet($api_code,$password,$priv='',$label='',$email='') {
+
+private $api_code;
+
+		//When class is initiated include api_code
+	public function __construct($apicode){
+		$this->api_code = $apicode;
+	}
+
+	
+	/*
+	Along with the required $password argument
+	the $args argument which is optional itself will contain an array of optional arugments 
+	valid fields for $args are
+
+	priv, label, and email
+	
+	*/
+	
+    public function createWallet($password,$args = false) {
 		
 	//api url
-	$base = "https://blockchain.info/api/v2/create_wallet?api_code={$api_code}&password={$password}";
+	$base = "https://blockchain.info/api/v2/create_wallet?api_code=" . $this->api_code . "&password=" . $password;
 	  
-		if ($priv || $label || $email != '') {
-				//optional arguments
-				$args = array(
-				"priv"=> $priv,
-				"label" => $label,
-				"email" => $email 
-				);
-				
-					foreach ($args as $field) {
-						if ($args[$field] != '')  {
-							$base .= "&{$field}={$args[$field]}";
-						}
-					}
+	  
+		if ($args != false){	
+			foreach ($args as $key=>$field) {
+				if ($args[$field] != '')  {
+					$base .= "&" . $key . "=" . $field;
+				}
+			}	
 		}
 		
 	$content =  file_get_contents($base);
-		
-		if ($content != False) {
-			return $content;
-		} else {
-		//TODO: replace this with better error handling!
-			die("Error");
-		}
+		//returns data received or if it failed will return false
+		return $content;
     }
     
  
@@ -75,12 +82,8 @@ $priv, $label, $email are optional arguments
 
     $content = file_get_contents($base);
 
-		if ($content != False) {
-			return $content;
-		} else {
-		//todo replace with error handling
-			die("Error");
-		}
+		//returns data received or if it failed will return false
+		return $content;
 		
     } 
 	
