@@ -77,7 +77,7 @@ private $api_code;
 
 */   
  
-    function getWalletBalance($guid,$main_password,$address,$confirmations=6) { 
+    public function getWalletBalance($guid,$main_password,$address,$confirmations=6) { 
 
     $base = 'https://blockchain.info/merchant/' . $guid . '/address_balance?password=' . $main_password . '&address=' . $adress . '&confirmations=' . $confirmations;
 
@@ -87,6 +87,13 @@ private $api_code;
 		return $content;
 		
     } 
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	
