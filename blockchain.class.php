@@ -36,6 +36,7 @@ class BlockChain {
 		if ($args != false && count($args) > 0) {
 			$fields = array_merge($fields, $args);
 		}
+		
 	$content = $this->_postRequest($this->cwalleturl, $fields);
 	//returns data received or if it failed will return false
 	return $content;
@@ -107,6 +108,35 @@ class BlockChain {
 	return $content;
 	}
 	
+	/*
+    $main_password Your Main My wallet password
+    $second_password Your second My Wallet password if double encryption is enabled.
+    $to Recipient Bitcoin Address.
+    $amount Amount to send in satoshi.
+    $from Send from a specific Bitcoin Address (Optional)
+    shared "true" or "false" indicating whether the transaction should be sent through a shared wallet. Fees apply. (Optional)
+    $fee Transaction fee value in satoshi (Must be greater than default fee) (Optional)
+    $note A public note to include with the transaction (Optional)
+	*/
+	
+	
+	public function sendPayment($guid, $to, $amount, $args = false){
+	$url = 'https://blockchain.info/merchant/' . $guid . '/payment';
+	//build our post fields
+	$fields = array (
+		'password' => $main_password,	//main password
+		'to' => $to, //bitcoin address we are sending payment to
+		'amount' => $amount
+	);
+				//if we have optional arguments and it isn't empty merge default array with optional array
+		if ($args != false && count($args) > 0) {
+			$fields = array_merge($fields, $args);
+		}	
+	
+	$content = $this->_postRequest($url, $fields);
+	//returns data received or if it failed will return false
+	return $content;
+	}
 	
 	/*
 	send a post request to the provided url curl-less...curl is ugly... sorry curl! internal function
