@@ -79,7 +79,7 @@ class BlockChain {
 	);
 	
 	
-	recipients are supplied through an array this fuction is for more than one transaction at a time.
+	recipients are supplied through an array this function is for more than one transaction at a time.
 	an example of $recipients array
 	$recipients = array(
 	'bitcoin address 1' => "amount to send",
