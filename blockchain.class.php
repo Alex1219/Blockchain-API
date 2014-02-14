@@ -20,7 +20,11 @@ class BlockChain {
 	Along with the required $password argument
 	the $args argument which is optional itself will contain an array of optional arugments 
 	valid fields for $args are
-
+	Example:
+	$args = array(
+	'priv'=>"123",
+	'label'=>"my wallet"
+	);
 	priv, label, and email
 	*/
     public function createWallet($password,$args = false) {	
@@ -59,6 +63,52 @@ class BlockChain {
 		
     } 
 	
+	/*
+
+    $main_password Your Main My wallet password
+    $second_password Your second My Wallet password if double encryption is enabled.
+    $recipients Is a JSON Object using Bitcoin Addresses as keys and the amounts to send as values (See below).
+    $from Send from a specific Bitcoin Address (Optional)
+    $shared "true" or "false" indicating whether the transaction should be sent through a shared wallet. Fees apply. (Optional)
+    $fee Transaction fee value in satoshi (Must be greater than default fee) (Optional)
+    $note A public note to include with the transaction (Optional)
+
+	
+	The optional arguments are supplied through the $args argument
+	example:
+	$args = array(
+	'from'=>'a bitcoin address'
+	);
+	
+	
+	recipients are supplied through an array this fuction is for more than one transaction at a time.
+	an example of $recipients array
+	$recipients = array(
+	'bitcoin address 1' => "amount to send",
+	'bitcoin address 2' => "amount to send",
+	'bitcoin address 3' => "amount to send",
+	...
+	);
+	
+	it is required that this be sent in json format
+	*/
+	public function multiTransaction($guid, $main_password, $recipients, $args = false){
+	$url = 'https://blockchain.info/merchant/' . $guid . '/sendmany';
+	//build our post fields
+	$fields = array (
+		'password' => $main_password,	//main password
+		'api_code' => $this->api_code,	//api code
+		'recipients' => json_encode($recipients) //json encoded recipients
+	);
+				//if we have optional arguments and it isn't empty merge default array with optional array
+		if ($args != false && count($args) > 0) {
+			$fields = array_merge($fields, $args);
+		}
+	
+	$content = $this->_postRequest($url, $fields);
+	//returns data received or if it failed will return false
+	return $content;
+	}
 	
 	
 	/*
