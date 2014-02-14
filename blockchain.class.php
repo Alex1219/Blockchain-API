@@ -117,10 +117,13 @@ class BlockChain {
     shared "true" or "false" indicating whether the transaction should be sent through a shared wallet. Fees apply. (Optional)
     $fee Transaction fee value in satoshi (Must be greater than default fee) (Optional)
     $note A public note to include with the transaction (Optional)
+	
+	
+	sends a single payment to the address specified in the argument $to
+	in the amount specified by the $amount argument.
+	
 	*/
-	
-	
-	public function sendPayment($guid, $to, $amount, $args = false){
+	public function sendPayment($guid, $main_password, $to, $amount, $args = false){
 	$url = 'https://blockchain.info/merchant/' . $guid . '/payment';
 	//build our post fields
 	$fields = array (
