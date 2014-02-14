@@ -31,7 +31,6 @@ class BlockChain {
 	//build our post fields
 	$fields = array (
 		'password' => $password,
-		'api_code' => $this->api_code
 	);
 			//if we have optional arguments and it isn't empty merge default array with optional array
 		if ($args != false && count($args) > 0) {
@@ -52,7 +51,6 @@ class BlockChain {
 	//build our post fields
 	$fields = array (
 		'password' => $main_password,	//main my wallet password
-		'api_code' => $this->api_code,	//api access code
 		'address' => $address, 			//bitcoin address to lookup
 		'confirmations' => $confirmations	//Minimum number of confirmations required
 	);
@@ -97,7 +95,6 @@ class BlockChain {
 	//build our post fields
 	$fields = array (
 		'password' => $main_password,	//main password
-		'api_code' => $this->api_code,	//api code
 		'recipients' => json_encode($recipients) //json encoded recipients
 	);
 				//if we have optional arguments and it isn't empty merge default array with optional array
@@ -117,6 +114,9 @@ class BlockChain {
 	^***make sure to clean any user input if forwarding user input into this function***^
 	*/
 	private function _postRequest($url, $args){
+	
+	$args['api_code'] = $this->api_code;	
+	
 		$options = array(
 			'http' => array(
 				'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
