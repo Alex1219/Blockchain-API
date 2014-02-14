@@ -4,29 +4,12 @@ class BlockChain {
 		const cwalleturl = 'https://blockchain.info/api/v2/create_wallet'; //API url for creating a wallet 
 
 			//When class is initiated include api_code
-			public function __construct($apicode){
-				$this->api_code = $apicode;
-			}
-
-	
-	/*	
-    Required fields for creating a wallet
-    $password - The password for the new wallet. Must be at least 10 characters in length.
-	$api_code  - An API code with create wallets permission.
-    $priv A private key to add to the wallet (Wallet import format preferred). (Optional)
-    $label A label to set for the first address in the wallet. Alphanumeric only. (Optional)
-    $email An email to associate with the new wallet i.e. the email address of the user you are creating this wallet on behalf of. (Optional)
-
-	Along with the required $password argument
-	the $args argument which is optional itself will contain an array of optional arugments 
-	valid fields for $args are
-	Example:
-	$args = array(
-	'priv'=>"123",
-	'label'=>"my wallet"
-	);
-	priv, label, and email
-	*/
+	public function __construct($apicode){
+		$this->api_code = $apicode;
+	}
+/*
+creates a bitcoin wallet
+*/
     public function createWallet($password,$args = false) {	
 	//build our post fields
 	$fields = array (
@@ -62,35 +45,9 @@ class BlockChain {
 		
     } 
 	
-	/*
-
-    $main_password Your Main My wallet password
-    $second_password Your second My Wallet password if double encryption is enabled.
-    $recipients Is a JSON Object using Bitcoin Addresses as keys and the amounts to send as values (See below).
-    $from Send from a specific Bitcoin Address (Optional)
-    $shared "true" or "false" indicating whether the transaction should be sent through a shared wallet. Fees apply. (Optional)
-    $fee Transaction fee value in satoshi (Must be greater than default fee) (Optional)
-    $note A public note to include with the transaction (Optional)
-
-	
-	The optional arguments are supplied through the $args argument
-	example:
-	$args = array(
-	'from'=>'a bitcoin address'
-	);
-	
-	
-	recipients are supplied through an array this function is for more than one transaction at a time.
-	an example of $recipients array
-	$recipients = array(
-	'bitcoin address 1' => "amount to send",
-	'bitcoin address 2' => "amount to send",
-	'bitcoin address 3' => "amount to send",
-	...
-	);
-	
-	it is required that this be sent in json format
-	*/
+/*
+sends bitcoins to multiple addresses in one api call
+*/
 	public function multiTransaction($guid, $main_password, $recipients, $args = false){
 	$url = 'https://blockchain.info/merchant/' . $guid . '/sendmany';
 	//build our post fields
@@ -108,21 +65,9 @@ class BlockChain {
 	return $content;
 	}
 	
-	/*
-    $main_password Your Main My wallet password
-    $second_password Your second My Wallet password if double encryption is enabled.
-    $to Recipient Bitcoin Address.
-    $amount Amount to send in satoshi.
-    $from Send from a specific Bitcoin Address (Optional)
-    shared "true" or "false" indicating whether the transaction should be sent through a shared wallet. Fees apply. (Optional)
-    $fee Transaction fee value in satoshi (Must be greater than default fee) (Optional)
-    $note A public note to include with the transaction (Optional)
-	
-	
-	sends a single payment to the address specified in the argument $to
-	in the amount specified by the $amount argument.
-	
-	*/
+/*
+send a single payment to the specified address
+*/
 	public function sendPayment($guid, $main_password, $to, $amount, $args = false){
 	$url = 'https://blockchain.info/merchant/' . $guid . '/payment';
 	//build our post fields
